@@ -31,6 +31,8 @@ install.packages("ggpubr")
 install.packages("ggdendro")
 
 ## Workflow
+![Workflow](https://github.com/user-attachments/assets/d73c25f2-a8dd-4282-bb02-d73582d1b865)
+
 
 ## Raw FASTQ files and reference taxonomy file (Silva_138)
 Download amplicon sequencing raw data (.zip) files for analyses, following this link:
