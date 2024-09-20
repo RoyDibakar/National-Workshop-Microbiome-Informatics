@@ -1,10 +1,9 @@
 # National-Workshop-Microbiome-Informatics
-![IMG-20240911-WA0009](https://github.com/user-attachments/assets/237bb872-dcb2-4ec8-8304-7c81798bb017)
-
 
 ## Introduction
 
 This workshop will help the newbies to learn how to analyse the 16s rRNA amplicon data using R.
+![IMG-20240911-WA0009](https://github.com/user-attachments/assets/237bb872-dcb2-4ec8-8304-7c81798bb017)
 
 ## Pre-requisities
 R should be installed in the user system/PC. R installation steps are given in https://cran.r-project.org/bin/windows/base/R-4.4.1-win.exe. 
