@@ -134,14 +134,6 @@ t2$cal_ordination(method = "PCoA")
 t2$plot_ordination(plot_color = "When", plot_shape = "When", plot_type = c("point", "ellipse")) + theme(axis.text.y = element_text(size = 12, vjust = 0.5, face = "bold"), axis.text.x = element_text(size = 16, face = "bold"),panel.background = element_blank(), axis.title = element_text(size = 12, face = "bold"), axis.line = element_line(colour = "black"), legend.text = element_text(size = 12))
 ggsave("beta.tiff", height = 6, width = 6, dpi = 700)
 
-#Clustering
-meco_object$sample_table %<>% subset(When %in% c("Early", "Late"))
-meco_object$tidy_dataset()
-t3 <- trans_beta$new(dataset = meco_object, group = "When")
-# use replace_name to set the label name, group parameter used to set the color
-t3$plot_clustering(group = "When", replace_name = c("When"))
-ggsave("cluster.tiff", height = 6, width = 6, dpi = 700)
-
 #Microbial composition
 t4 <- trans_abund$new(dataset = meco_object, taxrank = "Genus", ntaxa = 10)
 t4$plot_bar(others_color = "grey70", facet = "When", xtext_keep = FALSE, legend_text_italic = TRUE)
