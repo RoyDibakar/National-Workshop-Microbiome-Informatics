@@ -1,9 +1,7 @@
 library(dada2)
-library(phyloseq)
-library(microeco)
-
 #Getting ready
-path <- "C:/Users/User/Desktop/Conference_Microbiome_Informatics/MiSeq_SOP" # CHANGE ME to the directory containing the fastq files after unzipping.
+# First set directory, where you have downloaded the raw FASTQ files
+path <- "C:/Users/User/Desktop/Conference_Microbiome_Informatics/Raw_FASTQ_Files" # CHANGE ME to the directory containing the fastq files after unzipping.
 list.files(path)
 
 # Forward and reverse fastq filenames have format: SAMPLENAME_R1_001.fastq and SAMPLENAME_R2_001.fastq
@@ -33,9 +31,7 @@ names(filtRs) <- sample.names
 filtFs
 filtRs
 
-out <- filterAndTrim(fnFs, filtFs, fnRs, filtRs, truncLen=c(240,160),
-                     maxN=0, maxEE=c(2,2), truncQ=2, rm.phix=TRUE,
-                     compress=TRUE, multithread=FALSE) # On Windows set multithread=FALSE
+out <- filterAndTrim(fnFs, filtFs, fnRs, filtRs, truncLen=c(240,160), maxN=0, maxEE=c(2,2), truncQ=2, rm.phix=TRUE, compress=TRUE, multithread=FALSE) # On Windows set multithread=FALSE
 head(out)
 
 #Learn the Error Rates
@@ -55,11 +51,10 @@ mergers <- mergePairs(dadaFs, filtFs, dadaRs, filtRs, verbose=TRUE)
 # Inspect the merger data.frame from the first sample
 head(mergers[[1]])
 
-View(mergers$F3D0)
-
+#View(mergers$F3D0)
 #Construct sequence table
 seqtab <- makeSequenceTable(mergers)
-View(seqtab)
+# View(seqtab)
 
 # Inspect distribution of sequence lengths
 table(nchar(getSequences(seqtab)))
@@ -86,14 +81,6 @@ taxa.print <- taxa # Removing sequence rownames for display only
 rownames(taxa.print) <- NULL
 head(taxa.print)
 
-#Evaluating DADA2’s accuracy on the mock community:
-unqs.mock <- seqtab.nochim["Mock",]
-unqs.mock <- sort(unqs.mock[unqs.mock>0], decreasing=TRUE) # Drop ASVs absent in the Mock
-cat("DADA2 inferred", length(unqs.mock), "sample sequences present in the Mock community.\n")
-mock.ref <- getSequences(file.path(path, "HMP_MOCK.v35.fasta"))
-match.ref <- sum(sapply(names(unqs.mock), function(x) any(grepl(x, mock.ref))))
-cat("Of those,", sum(match.ref), "were exact matches to the expected reference sequences.\n")
-
 #Downstream analysis
 library(phyloseq)
 
@@ -108,7 +95,6 @@ samdf$When[samdf$Day>100] <- "Late"
 rownames(samdf) <- samples.out
 
 ps <- phyloseq(otu_table(seqtab.nochim, taxa_are_rows=FALSE), sample_data(samdf), tax_table(taxa))
-ps <- prune_samples(sample_names(ps) != "Mock", ps) # Remove mock sample
 
 dna <- Biostrings::DNAStringSet(taxa_names(ps))
 names(dna) <- taxa_names(ps)
@@ -124,9 +110,12 @@ View(ps@sam_data)
 library(file2meco)
 library(microeco)
 library(ggplot2)
+library(ggdendro)
+library(ggpubr)
 library(magrittr)
-meco_object <- phyloseq2meco(ps)
 
+meco_object <- phyloseq2meco(ps)
+meco_object$tidy_dataset()
 #Filter data
 meco_object$filter_pollution(taxa = c("mitochondria", "chloroplast"))
 
@@ -157,21 +146,25 @@ ggsave("cluster.tiff", height = 6, width = 6, dpi = 700)
 #Microbial composition
 t4 <- trans_abund$new(dataset = meco_object, taxrank = "Genus", ntaxa = 10)
 t4$plot_bar(others_color = "grey70", facet = "When", xtext_keep = FALSE, legend_text_italic = TRUE)
-ggsave("abundance_1.tiff", height = 6, width = 10, dpi = 700)
+ggsave("Abundance_sample_wise.tiff", height = 6, width = 10, dpi = 700)
 
 # The groupmean parameter can be used to obtain the group-mean barplot.
 t5 <- trans_abund$new(dataset = meco_object, taxrank = "Genus", ntaxa = 10, groupmean = "When")
 g1 <- t5$plot_bar(bar_full = FALSE, legend_text_italic = TRUE)+theme(axis.text.y = element_text(size = 12, vjust = 0.5, face = "bold"), axis.text.x = element_text(size = 16, face = "bold"),panel.background = element_blank(), axis.title = element_text(size = 12, face = "bold"), axis.line = element_line(colour = "black"), legend.text = element_text(size = 12))
-ggsave("Abundance.tiff", height = 6, width = 6, dpi = 700)
+g1
+ggsave("Abundance_Bar.tiff", height = 6, width = 6, dpi = 700)
 
 
 #Differential analysis
-# meco_object$filter_taxa(rel_abund = 0.001, freq = 0.01, include_lowest = TRUE)
-t6 <- trans_diff$new(dataset = meco_object, method = "lefse", group = "When", alpha = 0.01, lefse_subgroup = NULL, taxa_level = "Genus")
+#LEfSE
+t6 <- trans_diff$new(dataset = meco_object, method = "lefse", group = "When", alpha = 0.05, lefse_subgroup = NULL, taxa_level = "Genus", p_adjust_method = "fdr")
 # see t1$res_diff for the result
 # From v0.8.0, threshold is used for the LDA score selection.
-t6$plot_diff_bar(threshold = 2)
+g2 <- t6$plot_diff_bar(threshold = 2)
+g2
 ggsave("LDA.tiff", height = 6, width = 10, dpi = 700)
 
-
-
+#ALDEx2_kw
+t7 <- trans_diff$new(dataset = meco_object, method = "ALDEx2_kw", group = "When", filter_thres = 0.01, taxa_level = "Genus")
+t7$plot_diff_abund(add_sig = TRUE, use_number = 1:12, simplify_names = FALSE)
+ggsave("ALDEx2_kw.tiff", height = 8, width = 12, dpi = 700)
