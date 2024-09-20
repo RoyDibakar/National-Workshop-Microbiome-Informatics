@@ -44,6 +44,3 @@ The R codes can be downloded from the following link https://github.com/RoyDibak
 
 ## Team
 Dibakar Roy, Paramita Roy, and Sudipto Saha
-
-## Disclaimer
-The scripts were tried and tested on the Windows Operating system.
