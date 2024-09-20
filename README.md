@@ -7,11 +7,13 @@
 This workshop will help the newbies to learn how to analyse the 16s rRNA amplicon data using R.
 
 ## Pre-requisities
-R should be installed in the user system/PC. R installation steps are given in https://cran.r-project.org/. The following R packages are required for the analysis the 16s rRNA amplicon data:
+R should be installed in the user system/PC. R installation steps are given in https://cran.r-project.org/bin/windows/base/R-4.4.1-win.exe. RStudio should also be installed, https://download1.rstudio.org/electron/windows/RStudio-2024.04.2-764.exe
+
+The following R packages are required for the analysis the 16s rRNA amplicon data:
 ## R packages
 
 if (!requireNamespace("BiocManager", quietly = TRUE))
-install.packages("BiocManager")
+                                install.packages("BiocManager")
 
 BiocManager::install("dada2")
 
