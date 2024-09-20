@@ -38,8 +38,7 @@ head(out)
 errF <- learnErrors(filtFs, multithread=FALSE)
 errR <- learnErrors(filtRs, multithread=FALSE)
 
-plotErrors(errF, nominalQ=TRUE)
-
+#plotErrors(errF, nominalQ=TRUE)
 #Sample Inference
 dadaFs <- dada(filtFs, err=errF, multithread=FALSE)
 dadaRs <- dada(filtRs, err=errR, multithread=FALSE)
@@ -61,8 +60,8 @@ table(nchar(getSequences(seqtab)))
 
 #Remove chimeras
 seqtab.nochim <- removeBimeraDenovo(seqtab, method="consensus", multithread=FALSE, verbose=TRUE)
-dim(seqtab.nochim)
-sum(seqtab.nochim)/sum(seqtab)
+#dim(seqtab.nochim)
+#sum(seqtab.nochim)/sum(seqtab)
 
 #Track reads through the pipeline
 getN <- function(x) sum(getUniques(x))
