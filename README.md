@@ -39,3 +39,5 @@ Download the reference taxonomy file using the following link :
 https://zenodo.org/records/4587955/files/silva_nr99_v138.1_train_set.fa.gz
 
 ### Unzip the folder; keep the reference taxonomy file and the FASTQ files in the same folder
+
+The R codes can be downloded from the following link https://github.com/RoyDibakar/National-Workshop-Microbiome-Informatics/blob/main/Codes_Microbiome_Informatics.R
