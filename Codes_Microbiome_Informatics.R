@@ -171,6 +171,7 @@ g3 <- t8$plot_diff_bar(threshold = 2)
 g3
 ggsave("LDA.tiff", height = 6, width = 10, dpi = 700)
 
+BiocManager::install("ALDEx2")
 #ALDEx2_kw
 t9 <- trans_diff$new(dataset = meco_object, method = "ALDEx2_kw", group = "When", filter_thres = 0.01, taxa_level = "Genus")
 t9$plot_diff_abund(add_sig = TRUE, use_number = 1:12, simplify_names = FALSE)
