@@ -37,8 +37,7 @@ head(out)
 #Learn the Error Rates
 errF <- learnErrors(filtFs, multithread=FALSE)
 errR <- learnErrors(filtRs, multithread=FALSE)
-
-plotErrors(errF, nominalQ=TRUE)
+#plotErrors(errF, nominalQ=TRUE)
 
 #Sample Inference
 dadaFs <- dada(filtFs, err=errF, multithread=FALSE)
@@ -61,8 +60,8 @@ table(nchar(getSequences(seqtab)))
 
 #Remove chimeras
 seqtab.nochim <- removeBimeraDenovo(seqtab, method="consensus", multithread=FALSE, verbose=TRUE)
-dim(seqtab.nochim)
-sum(seqtab.nochim)/sum(seqtab)
+#dim(seqtab.nochim)
+#sum(seqtab.nochim)/sum(seqtab)
 
 #Track reads through the pipeline
 getN <- function(x) sum(getUniques(x))
@@ -154,7 +153,6 @@ g1 <- t5$plot_bar(bar_full = FALSE, legend_text_italic = TRUE)+theme(axis.text.y
 g1
 ggsave("Abundance.tiff", height = 6, width = 6, dpi = 700)
 
-
 # #Heatmap
 # t6 <- trans_abund$new(dataset = meco_object, taxrank = "Genus", ntaxa = 15)
 # g2 <- t6$plot_heatmap(facet = "When", xtext_keep = FALSE, withmargin = FALSE, plot_breaks = c(0.01, 0.1, 1, 10))
@@ -163,8 +161,6 @@ ggsave("Abundance.tiff", height = 6, width = 6, dpi = 700)
 # #Boxplot
 # t7 <- trans_abund$new(dataset = meco_object, taxrank = "Genus", ntaxa = 15)
 # t7$plot_box(group = "When", xtext_angle = 90) +theme(axis.text.y = element_text(size = 12, vjust = 0.5, face = "bold"), axis.text.x = element_text(size = 10, face = "bold"),panel.background = element_blank(), axis.title = element_text(size = 12, face = "bold"), axis.line = element_line(colour = "black"), legend.text = element_text(size = 12))
-
-
 
 #Differential analysis
 #LEfSE
