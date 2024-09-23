@@ -1,7 +1,7 @@
 library(dada2)
 #Getting ready
 # First set directory, where you have downloaded the raw FASTQ files
-path <- "" # CHANGE ME to the directory containing the fastq files after unzipping.
+path <- "" # CHANGE the directory containing the fastq files after unzipping.
 list.files(path)
 
 # Forward and reverse fastq filenames have format: SAMPLENAME_R1_001.fastq and SAMPLENAME_R2_001.fastq
