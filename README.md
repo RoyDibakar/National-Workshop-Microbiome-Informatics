@@ -31,7 +31,8 @@ install.packages("ggpubr")
 install.packages("ggdendro")
 
 ## Workflow
-![Workflow](https://github.com/user-attachments/assets/d73c25f2-a8dd-4282-bb02-d73582d1b865)
+![workflow_v2](https://github.com/user-attachments/assets/751d7781-eddb-4539-869f-cd26a90d7c56)
+
 
 
 ## Raw FASTQ files and reference taxonomy file (Silva_138)
