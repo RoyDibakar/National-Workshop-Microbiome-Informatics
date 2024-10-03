@@ -13,15 +13,15 @@ RStudio should also be installed, https://download1.rstudio.org/electron/windows
 The following R packages are required for the analysis the 16s rRNA amplicon data:
 ## R packages
 
-if (!requireNamespace("BiocManager", quietly = TRUE))
+  if (!requireNamespace("BiocManager", quietly = TRUE))
                                 install.packages("BiocManager")
-BiocManager::install("dada2")
-BiocManager::install("phyloseq")
-install.packages("microeco")
-install.packages("microeco")
-install.packages("ggplot2")
-install.packages("ggpubr")
-install.packages("ggdendro")
+  BiocManager::install("dada2")
+  BiocManager::install("phyloseq")
+  install.packages("microeco")
+  install.packages("microeco")
+  install.packages("ggplot2")
+  install.packages("ggpubr")
+  install.packages("ggdendro")
 
 ## Workflow
 ![workflow_v2](https://github.com/user-attachments/assets/751d7781-eddb-4539-869f-cd26a90d7c56)
