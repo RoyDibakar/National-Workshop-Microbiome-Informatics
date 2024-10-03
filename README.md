@@ -15,19 +15,12 @@ The following R packages are required for the analysis the 16s rRNA amplicon dat
 
 if (!requireNamespace("BiocManager", quietly = TRUE))
                                 install.packages("BiocManager")
-
 BiocManager::install("dada2")
-
 BiocManager::install("phyloseq")
-
 install.packages("microeco")
-
 install.packages("microeco")
-
 install.packages("ggplot2")
-
 install.packages("ggpubr")
-
 install.packages("ggdendro")
 
 ## Workflow
